@@ -1,0 +1,42 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.require_version ">= 1.5.0"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+    config.vm.hostname = "magnolia-berkshelf"
+    num_cpus = ENV['VAGRANTMANAGER_CPU']
+    mem_size = ENV['VAGRANTMANAGER_MEM']
+
+    # Set the version of chef to install using the vagrant-omnibus plugin
+    config.omnibus.chef_version = :latest
+
+    # Every Vagrant virtual environment requires a box to build off of.
+    config.vm.box = "opscode_ubuntu-12.04_provisionerless"
+
+    # The url from where the 'config.vm.box' box will be fetched if it
+    # doesn't already exist on the user's system.
+    config.vm.box_url = "https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box"
+    config.vm.provider :virtualbox do |vb|
+        vb.customize ["modifyvm", :id, "--memory", mem_size ? mem_size : 4096]
+        vb.customize ["modifyvm", :id, "--cpus",  num_cpus ? num_cpus : 2]
+    end
+
+    config.vm.network :private_network, ip: "192.168.70.4"
+
+    # Enabling the Berkshelf plugin. To enable this globally, add this configuration
+    # option to your ~/.vagrant.d/Vagrantfile file
+    config.berkshelf.enabled = true
+
+    config.vm.provision "shell", inline: "apt-get update"
+
+    config.vm.provision :chef_solo do |chef|
+        chef.run_list = [
+            "recipe[magnolia::default]"
+        ]
+    end
+end

@@ -1,0 +1,20 @@
+description "Magnolia CMS Service"
+start on runlevel [2345]
+stop on runlevel [016]
+setuid magnolia
+setgid magnolia
+
+env magnolia_control=/opt/magnolia/apache-tomcat-7.0.47/bin/magnolia_control.sh
+export magnolia_control
+
+pre-start script
+    set -x
+    logger -is -t "running pre-start [$magnolia_control start]"
+    $magnolia_control start
+end script
+
+post-stop script
+    set -x
+    logger -is -t "running pre-stop [$magnolia_control stop]"
+    $magnolia_control stop
+end script

@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- The contents of this file will be loaded for each web application -->
+<Context>
+
+    <!-- Default set of monitored resources -->
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+
+    <Resource name="jdbc/MagnoliaAuthor"
+              auth="Container"
+              type="com.mysql.jdbc.jdbc2.optional.MysqlDataSource"
+              factory="com.mysql.jdbc.jdbc2.optional.MysqlDataSourceFactory"
+              user="cms"
+              password="password"
+              driverClassName="com.mysql.jdbc.Driver"
+              explicitUrl="true"
+              url="jdbc:mysql://127.0.0.1:3306/magnolia_author"/>
+
+    <Resource name="jdbc/MagnoliaPublic"
+              auth="Container"
+              type="com.mysql.jdbc.jdbc2.optional.MysqlDataSource"
+              factory="com.mysql.jdbc.jdbc2.optional.MysqlDataSourceFactory"
+              user="cms"
+              password="password"
+              driverClassName="com.mysql.jdbc.Driver"
+              explicitUrl="true"
+              url="jdbc:mysql://127.0.0.1:3306/magnolia_public"/>
+
+<!--
+    https://wiki.magnolia-cms.com/display/WIKI/Database-Only+Repositories+with+JNDI+Datasources
+
+    <Resource name="jdbc/MagnoliaAuthor"
+              auth="Container"
+              type="javax.sql.DataSource"
+              username="cms"
+              password="password"
+              driverClassName="com.mysql.jdbc.Driver"
+              validationQuery="SELECT 1"
+              testOnBorrow="true"
+              url="jdbc:mysql://127.0.0.1:3306/magnolia_author"/>
+
+    <Resource name="jdbc/MagnoliaPublic"
+              auth="Container"
+              type="javax.sql.DataSource"
+              username="cms"
+              password="password"
+              driverClassName="com.mysql.jdbc.Driver"
+              validationQuery="SELECT 1"
+              testOnBorrow="true"
+              url="jdbc:mysql://127.0.0.1:3306/magnolia_public"/>
+
+-->
+
+    <!-- Uncomment this to disable session persistence across Tomcat restarts -->
+    <!--
+    <Manager pathname="" />
+    -->
+
+    <!-- Uncomment this to enable Comet connection tacking (provides events
+         on session expiration as well as webapp lifecycle) -->
+    <!--
+    <Valve className="org.apache.catalina.valves.CometConnectionManagerValve" />
+    -->
+
+</Context>
