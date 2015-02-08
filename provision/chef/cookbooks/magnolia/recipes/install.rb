@@ -73,6 +73,18 @@ ark "magnolia" do
     action :put
 end
 
+# Retrieve Extra Magnolia CMS Modules
+ark "magnolia-rest-tools" do
+    extension "zip"
+    url node['magnolia']['rest_tools_module_url']
+    path "#{magnolia_author_lib}"
+    owner 'magnolia'
+    group 'magnolia'
+    mode 0644
+    checksum 'c061929866ae385d74d23389f3a91e8ee7fdb975b8c5b4063886affd017c4c71'
+    action :dump
+end
+
 # Replace Derby JDBC Drivers with MySQL
 maven 'mysql-connector-java' do
     group_id 'mysql'
